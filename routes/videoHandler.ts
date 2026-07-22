@@ -15,6 +15,13 @@ import * as utils from '../lib/utils'
 
 const entities = new Entities()
 
+// Prevents subtitle text from prematurely closing the raw-text <script> element
+// (script data end tag open state per the HTML parsing spec) without altering
+// any other characters, so legitimate WebVTT cue content stays intact.
+function escapeScriptContext (input: string): string {
+  return input.replace(/<\/script/gi, '<\\/script')
+}
+
 export const getVideo = () => {
   return (req: Request, res: Response) => {
     const path = videoPath()
@@ -68,7 +75,7 @@ export const promotionVideo = () => {
       const pug = (await import('pug')).default
       const fn = pug.compile(template)
       let compiledTemplate = fn()
-      compiledTemplate = compiledTemplate.replace('<script id="subtitle"></script>', '<script id="subtitle" type="text/vtt" data-label="English" data-lang="en">' + subs + '</script>')
+      compiledTemplate = compiledTemplate.replace('<script id="subtitle"></script>', '<script id="subtitle" type="text/vtt" data-label="English" data-lang="en">' + escapeScriptContext(subs) + '</script>')
       res.send(compiledTemplate)
     })
   }
