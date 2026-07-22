@@ -27,8 +27,13 @@ export function retrieveLoggedInUser () {
         if (requestedFields.length > 0) {
           // When fields are specified, return only those fields
           for (const field of requestedFields) {
-            if (user?.data[field as keyof typeof user.data] !== undefined) {
-              baseUser[field] = user?.data[field as keyof typeof user.data]
+            // Restrict access to the object's own data properties to prevent
+            // reaching inherited/prototype properties via user-controlled keys
+            if (user?.data != null && Object.prototype.hasOwnProperty.call(user.data, field)) {
+              const value = user.data[field as keyof typeof user.data]
+              if (value !== undefined) {
+                baseUser[field] = value
+              }
             }
           }
         } else {
