@@ -31,6 +31,6 @@ jobs:
           - exclude:
                id: js/missing-rate-limiting
     - name: Autobuild
-      uses: github/codeql-action/autobuild@v3
+      uses: github/codeql-action/autobuild@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
