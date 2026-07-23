@@ -38,6 +38,6 @@ jobs:
           retention-days: 7
 
       - name: AppSecAI Triage and Remediation
-        uses: AppSecureAI/automation-action@v1
+        uses: AppSecureAI/automation-action@83b6fa3829e33724beb5bbedc4f6976b814c9ff9 # v1
         with:
           file: opengrep-results.sarif
