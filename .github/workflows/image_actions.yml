@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v6
       - name: Compress Images
         id: calibre
-        uses: calibreapp/image-actions@main
+        uses: calibreapp/image-actions@26d5b54006db4da7a1b29903f33404a6f77b58cf # main
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           ignorePaths: '**/3d_keychain.jpg,**/favorite-hiking-place.png,**/5.png'
