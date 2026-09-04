@@ -23,11 +23,12 @@ export function retrieveLoggedInUser () {
         const requestedFields = fieldsParam ? fieldsParam.split(',').map(f => f.trim()) : []
 
         let baseUser: any = {}
+        const ALLOWED_USER_FIELDS = new Set(['id', 'email', 'lastLoginIp', 'profileImage', 'password'])
 
         if (requestedFields.length > 0) {
-          // When fields are specified, return only those fields
+          // When fields are specified, return only those allowlisted fields
           for (const field of requestedFields) {
-            if (user?.data[field as keyof typeof user.data] !== undefined) {
+            if (ALLOWED_USER_FIELDS.has(field) && user?.data[field as keyof typeof user.data] !== undefined) {
               baseUser[field] = user?.data[field as keyof typeof user.data]
             }
           }
